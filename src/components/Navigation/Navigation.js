@@ -1,5 +1,6 @@
 import React from 'react';
-import brain from './Navigation/logo.png';
+import './Logo.css';
+import brain from './logo.png';
 
 
 const Navigation = ({ onRouteChange, isSignIn }) =>{
