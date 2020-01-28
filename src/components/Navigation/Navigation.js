@@ -6,11 +6,12 @@ const Navigation = ({ onRouteChange, isSignIn }) =>{
 
 if(isSignIn){
 return(
-
+<div >
 <nav style={{display:'flex', justifyContent:'flex-end'}}>
    <p onClick= {()=>onRouteChange('signout')} className='f3 link dim black underline pa3 pointer'>Sign Out</p>
 </nav>
-
+<h1 className='f5 '>{'Welcome To Recognition App'}</h1>
+</div>
 
 
 	);
@@ -18,10 +19,17 @@ return(
 }else{
 
 return (
+	<div>
 <nav style={{display:'flex', justifyContent:'flex-end'}}>
    <p onClick= {()=>onRouteChange('Signin')} className='f3 link dim black underline pa3 pointer'>Sign in</p>
    <p onClick= {()=>onRouteChange('register')} className='f3 link dim black underline pa3 pointer'>Register</p>
+
 </nav>
+<h1 className='f5 '>{'Welcome To Recognition App'}</h1>
+<p className='f3 '>
+      {'This Magic App will detect faces in picture and if the picture for a celeb person click recognize and it will tells you his/her name . Go and try!'}
+   </p>
+   </div>
 );
 
    }
