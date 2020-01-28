@@ -4,19 +4,12 @@ import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
-import CelebName from './components/CelebName/CelebName';
 import Signin from './components/Signin/Signin';
 import Register from './components/Register/Register';
 import Particles from 'react-particles-js';
-import Clarifai from 'clarifai';
 import './App.css';
-import 'tachyons';
 
 
-
-const app = new Clarifai.App({
- apiKey: '70a09e5088604ee9b6fd9e710d0a33d3'
-});
 
 
 
@@ -40,8 +33,6 @@ const initialState ={
   input:'',
   imageUrl:'',
   box:{},
-  celebName: '',
-  renderCelebrity: false,
   route:'Signin',
   isSignIn:false,
   user:{
@@ -103,48 +94,8 @@ this.setState({box: box});
 onInputChange = (event) =>{
 
 this.setState({input:event.target.value});
-this.setState({renderCelebrity: false});
-this.setState({imageUrl: ''});
 
 }
-
-  recognizeCelebrity = (data) => {
-    const celebrityName = data.outputs[0].data.regions[0].data.concepts[0].name;
-    this.setState({celebName: celebrityName});
-    this.setState({renderCelebrity: true});
-  }
-
-   onButtonSubmit = () => {
-    this.setState({imageUrl: this.state.input});
-    fetch('https://rishi-celeb-rec.herokuapp.com/imageurl', {
-      method: 'post',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        input: this.state.input
-      })
-    })
-   
-    .then(response => {
-      if(response){
-        fetch('https://rishi-celeb-rec.herokuapp.com/image', {
-          method: 'put',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
-            id: this.state.user.id,
-            imageUrl: this.state.imageUrl
-          })
-        }).then(response => response.json())
-          .then(count => {
-            this.setState(Object.assign(this.state.user, {entries: count}));
-          
-          })
-          .catch(error => console.log(error));
-      }
-      this.recognizeCelebrity(response);
-    })
-    .catch(err => console.log(err));
-  }
-
 
 onSubmit =() =>{
 	this.setState({imageUrl: this.state.input});
@@ -222,11 +173,9 @@ render(){
 
           />
          <ImageLinkForm 
-         onButtonSubmit={this.onButtonSubmit}
-         onSubmit={this.onSubmit} onInputChange={this.onInputChange} />
+     onSubmit={this.onSubmit} onInputChange={this.onInputChange} />
     
         <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl} />
-        <CelebName renderCelebrity={this.state.renderCelebrity} celebName={this.state.celebName} />
         </div>
        : (
         	this.state.route === 'Signin'
