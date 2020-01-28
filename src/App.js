@@ -121,7 +121,7 @@ this.setState({imageUrl: ''});
     .then(response => response.json())
     .then(response => {
       if(response){
-        fetch('https://serene-woodland-92507.herokuapp.com/recognize', {
+        fetch('https://serene-woodland-92507.herokuapp.com/image', {
           method: 'put',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
@@ -131,9 +131,7 @@ this.setState({imageUrl: ''});
         }).then(response => response.json())
           .then(count => {
             this.setState(Object.assign(this.state.user, {entries: count}));
-            this.setState(Object.assign(this.state.user, 
-              {recentImages: this.state.user.recentImages.concat([this.state.imageUrl])}
-            ));
+            
           })
           .catch(error => console.log(error));
       }
