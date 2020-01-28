@@ -8,10 +8,15 @@ import CelebName from './components/CelebName/CelebName';
 import Signin from './components/Signin/Signin';
 import Register from './components/Register/Register';
 import Particles from 'react-particles-js';
+import Clarifai from 'clarifai';
 import './App.css';
 import 'tachyons';
 
 
+
+const app = new Clarifai.App({
+ apiKey: '70a09e5088604ee9b6fd9e710d0a33d3'
+});
 
 
 
@@ -109,9 +114,9 @@ this.setState({imageUrl: ''});
     this.setState({renderCelebrity: true});
   }
 
-  onButtonSubmit = () => {
+   onButtonSubmit = () => {
     this.setState({imageUrl: this.state.input});
-    fetch('https://serene-woodland-92507.herokuapp.com/imageurl', {
+    fetch('https://rishi-celeb-rec.herokuapp.com/imageurl', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -119,9 +124,13 @@ this.setState({imageUrl: ''});
       })
     })
     .then(response => response.json())
+      app.models
+      .predict(
+        Clarifai.CELEBRITY_MODEL,
+        this.state.input)
     .then(response => {
       if(response){
-        fetch('https://serene-woodland-92507.herokuapp.com/image', {
+        fetch('https://rishi-celeb-rec.herokuapp.com/image', {
           method: 'put',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
@@ -131,7 +140,7 @@ this.setState({imageUrl: ''});
         }).then(response => response.json())
           .then(count => {
             this.setState(Object.assign(this.state.user, {entries: count}));
-            
+          
           })
           .catch(error => console.log(error));
       }
