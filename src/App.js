@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Clarifai from 'clarifai';
 import Navigation from './components/Navigation/Navigation';
 import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
@@ -6,10 +7,13 @@ import Rank from './components/Rank/Rank';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import Signin from './components/Signin/Signin';
 import Register from './components/Register/Register';
+import CelebName from './components/CelebName/CelebName';
 import Particles from 'react-particles-js';
 import './App.css';
 
-
+const app = new Clarifai.App({
+ apiKey: '70a09e5088604ee9b6fd9e710d0a33d3'
+});
 
 
 
@@ -32,6 +36,8 @@ const initialState ={
 
   input:'',
   imageUrl:'',
+  celebName: '',
+  renderCelebrity: false,
   box:{},
   route:'Signin',
   isSignIn:false,
@@ -94,8 +100,44 @@ this.setState({box: box});
 onInputChange = (event) =>{
 
 this.setState({input:event.target.value});
+this.setState({renderCelebrity: false});
 
 }
+
+ recognizeCelebrity = (data) => {
+    const celebrityName = data.outputs[0].data.regions[0].data.concepts[0].name;
+    this.setState({celebName: celebrityName});
+    this.setState({renderCelebrity: true});
+  }
+
+
+  onButtonSubmit = () => {
+    this.setState({imageUrl: this.state.input});
+    app.models
+      .predict(
+        Clarifai.CELEBRITY_MODEL,
+        this.state.input)
+      .then(response => {
+        if (response) {
+          fetch('https://serene-woodland-92507.herokuapp.com/image', {
+            method: 'put',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+              id: this.state.user.id
+            })
+          })
+            .then(response => response.json())
+            .then(count => {
+              this.setState(Object.assign(this.state.user, { entries: count}))
+            })
+
+        }
+        this.recognizeCelebrity(response);
+      })
+      .catch(err => console.log(err));
+  }
+
+
 
 onSubmit =() =>{
 	this.setState({imageUrl: this.state.input});
@@ -172,6 +214,7 @@ render(){
             entries={this.state.user.entries}
 
           />
+          <CelebName renderCelebrity={this.state.renderCelebrity} celebName={this.state.celebName} />
          <ImageLinkForm 
      onSubmit={this.onSubmit} onInputChange={this.onInputChange} />
     
