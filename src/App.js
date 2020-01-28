@@ -123,11 +123,7 @@ this.setState({imageUrl: ''});
         input: this.state.input
       })
     })
-    .then(response => response.json())
-      app.models
-      .predict(
-        Clarifai.CELEBRITY_MODEL,
-        this.state.input)
+   
     .then(response => {
       if(response){
         fetch('https://rishi-celeb-rec.herokuapp.com/image', {
