@@ -4,7 +4,7 @@ const CelebName = ( {renderCelebrity, celebName} ) => {
 	if(renderCelebrity){
 		return (
 			<div>
-				<p className='f3'>
+				<p className='f2 f-headline lh-solid'>
 			 		{'This seems to be ' + celebName} 
 			 	</p>
 			</div>

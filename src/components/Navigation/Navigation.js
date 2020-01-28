@@ -13,7 +13,7 @@ return(
 <nav style={{display:'flex', justifyContent:'flex-end'}}>
    <p onClick= {()=>onRouteChange('signout')} className='f3 link dim black underline pa3 pointer'>Sign Out</p>
 </nav>
-<h1 className='f1 f-headline lh-solid mid-gray '>{'Welcome To Recognition App'}</h1>
+<h1 className='f1 f-headline lh-solid  '>{'Welcome To Recognition App'}</h1>
 </div>
 
 
