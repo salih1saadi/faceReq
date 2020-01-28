@@ -1,6 +1,7 @@
 Detect Face And Celebrity Recognition App
 
 This app is can both detect face in picture and tells users who the celebrity in a given picture might be. Uses the Clarifai API's Celebrity Model and DETECT MODEL.
+-The front-end was built using React.js
 -the backend using Node.js + Express.js.
 -the database using Postgresql .
 
