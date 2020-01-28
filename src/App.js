@@ -215,7 +215,7 @@ render(){
 
           />
           <CelebName renderCelebrity={this.state.renderCelebrity} celebName={this.state.celebName} />
-         <ImageLinkForm 
+         <ImageLinkForm onButtonSubmit={this.onButtonSubmit}
      onSubmit={this.onSubmit} onInputChange={this.onInputChange} />
     
         <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl} />
