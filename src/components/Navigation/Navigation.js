@@ -1,4 +1,5 @@
 import React from 'react';
+import brain from '../logo/logo.png';
 
 
 const Navigation = ({ onRouteChange, isSignIn }) =>{
@@ -25,8 +26,13 @@ return (
    <p onClick= {()=>onRouteChange('register')} className='f3 link dim black underline pa3 pointer'>Register</p>
 
 </nav>
-<h1 className='f1 f-headline lh-solid washed-blue '>{'Welcome To Recognition App'}</h1>
-<p className='f3 ba shadow-5 b--black-10 mv4 mw6 center'>
+<h1 className='f1 f-headline lh-solid near-white '>{'Welcome To Recognition App'}</h1>
+<div className='ma4 mt0'>
+ <Tilt className="Tilt br3 shadow-3" options={{ max : 45 }} style={{ height: 150, width: 150 }} >
+  <div className="Tilt-inner pa4"> <img style={{paddingTop:'5px'}} src={brain} alt='logo'/> </div>
+ </Tilt>
+</div>
+<p className='f3 ba shadow-5 b--black-10  center'>
       {'This Magic App will detect faces in picture and if the picture for a celeb person click recognize and it will tells you his/her name . Go and try!'}
    </p>
    </div>
